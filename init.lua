@@ -1,88 +1,3 @@
---[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
-
-What is Kickstart?
-
-  Kickstart.nvim is *not* a distribution.
-
-  Kickstart.nvim is a starting point for your own configuration.
-    The goal is that you can read every line of code, top-to-bottom, understand
-    what your configuration is doing, and modify it to suit your needs.
-
-    Once you've done that, you can start exploring, configuring and tinkering to
-    make Neovim your own! That might mean leaving Kickstart just the way it is for a while
-    or immediately breaking it into modular pieces. It's up to you!
-
-    If you don't know anything about Lua, I recommend taking some time to read through
-    a guide. One possible example which will only take 10-15 minutes:
-      - https://learnxinyminutes.com/docs/lua/
-
-    After understanding a bit more about Lua, you can use `:help lua-guide` as a
-    reference for how Neovim integrates Lua.
-    - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
-
-Kickstart Guide:
-
-  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
-
-    If you don't know what this means, type the following:
-      - <escape key>
-      - :
-      - Tutor
-      - <enter key>
-
-    (If you already know the Neovim basics, you can skip this step.)
-
-  Once you've completed that, you can continue working through **AND READING** the rest
-  of the kickstart init.lua.
-
-  Next, run AND READ `:help`.
-    This will open up a help window with some basic information
-    about reading, navigating and searching the builtin help documentation.
-
-    This should be the first place you go to look when you're stuck or confused
-    with something. It's one of my favorite Neovim features.
-
-    MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-    which is very useful when you're not exactly sure of what you're looking for.
-
-  I have left several `:help X` comments throughout the init.lua
-    These are hints about where to find more information about the relevant settings,
-    plugins or Neovim features used in Kickstart.
-
-   NOTE: Look for lines like this
-
-    Throughout the file. These are for you, the reader, to help you understand what is happening.
-    Feel free to delete them once you know what you're doing, but they should serve as a guide
-    for when you are first encountering a few different constructs in your Neovim config.
-
-If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now! :)
---]]
 
 -- ============================================================
 -- SECTION 1: FOUNDATION
@@ -103,14 +18,12 @@ do
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
-  -- NOTE: You can change these options as you wish!
-  --  For more options, you can see `:help option-list`
 
   -- Make line numbers default
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
   --  Experiment for yourself to see if you like it!
-  -- vim.o.relativenumber = true
+  vim.o.relativenumber = true
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
@@ -119,9 +32,6 @@ do
   vim.o.showmode = false
 
   -- Sync clipboard between OS and Neovim.
-  --  Schedule the setting after `UiEnter` because it can increase startup-time.
-  --  Remove this option if you want your OS clipboard to remain independent.
-  --  See `:help 'clipboard'`
   vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
   -- Enable break indent
@@ -150,11 +60,6 @@ do
   -- Sets how neovim will display certain whitespace characters in the editor.
   --  See `:help 'list'`
   --  and `:help 'listchars'`
-  --
-  --  Notice listchars is set using `vim.opt` instead of `vim.o`.
-  --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
-  --   See `:help lua-options`
-  --   and `:help lua-guide-options`
   vim.o.list = true
   vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
@@ -203,8 +108,6 @@ do
     },
   }
 
-  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
   -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
   -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
   -- is not what someone will guess without a bit more experience.
@@ -214,10 +117,10 @@ do
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
   -- TIP: Disable arrow keys in normal mode
-  -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-  -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-  -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-  -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+  vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+  vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+  vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+  vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
   -- Keybinds to make split navigation easier.
   --  Use CTRL+<hjkl> to switch between windows
@@ -229,10 +132,10 @@ do
   vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
   -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
-  -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
-  -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
-  -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
-  -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+  vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
+  vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
+  vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
+  vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
@@ -370,10 +273,10 @@ do
     icons = { mappings = vim.g.have_nerd_font },
     -- Document existing key chains
     spec = {
-      { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-      { '<leader>t', group = '[T]oggle' },
-      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
-      { 'gr', group = 'LSP Actions', mode = { 'n' } },
+      -- { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
+      -- { '<leader>t', group = '[T]oggle' },
+      -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
+      -- { 'gr', group = 'LSP Actions', mode = { 'n' } },
     },
   }
 
@@ -443,140 +346,140 @@ do
   --  Check out: https://github.com/nvim-mini/mini.nvim
 end
 
--- ============================================================
--- SECTION 4: SEARCH & NAVIGATION
--- Telescope setup, keymaps, LSP picker mappings
--- ============================================================
-do
-  -- [[ Fuzzy Finder (files, lsp, etc) ]]
-  --
-  -- Telescope is a fuzzy finder that comes with a lot of different things that
-  -- it can fuzzy find! It's more than just a "file finder", it can search
-  -- many different aspects of Neovim, your workspace, LSP, and more!
-  --
-  -- There are lots of other alternative pickers (like snacks.picker, or fzf-lua)
-  -- so feel free to experiment and see what you like!
-  --
-  -- The easiest way to use Telescope, is to start by doing something like:
-  --  :Telescope help_tags
-  --
-  -- After running this command, a window will open up and you're able to
-  -- type in the prompt window. You'll see a list of `help_tags` options and
-  -- a corresponding preview of the help.
-  --
-  -- Two important keymaps to use while in Telescope are:
-  --  - Insert mode: <c-/>
-  --  - Normal mode: ?
-  --
-  -- This opens a window that shows you all of the keymaps for the current
-  -- Telescope picker. This is really useful to discover what Telescope can
-  -- do as well as how to actually do it!
-
-  ---@type (string|vim.pack.Spec)[]
-  local telescope_plugins = {
-    gh 'nvim-lua/plenary.nvim',
-    gh 'nvim-telescope/telescope.nvim',
-    gh 'nvim-telescope/telescope-ui-select.nvim',
-  }
-  if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') end
-
-  -- NOTE: You can install multiple plugins at once
-  vim.pack.add(telescope_plugins)
-
-  -- See `:help telescope` and `:help telescope.setup()`
-  require('telescope').setup {
-    -- You can put your default mappings / updates / etc. in here
-    --  All the info you're looking for is in `:help telescope.setup()`
-    --
-    -- defaults = {
-    --   mappings = {
-    --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-    --   },
-    -- },
-    -- pickers = {}
-    extensions = {
-      ['ui-select'] = { require('telescope.themes').get_dropdown() },
-    },
-  }
-
-  -- Enable Telescope extensions if they are installed
-  pcall(require('telescope').load_extension, 'fzf')
-  pcall(require('telescope').load_extension, 'ui-select')
-
-  -- See `:help telescope.builtin`
-  local builtin = require 'telescope.builtin'
-  vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-  vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-  vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-  vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-  vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-  vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-  vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-  vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-  vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-  vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
-  vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-
-  -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
-  -- If you later switch picker plugins, this is where to update these mappings.
-  vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
-    callback = function(event)
-      local buf = event.buf
-
-      -- Find references for the word under your cursor.
-      vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
-
-      -- Jump to the implementation of the word under your cursor.
-      -- Useful when your language has ways of declaring types without an actual implementation.
-      vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
-
-      -- Jump to the definition of the word under your cursor.
-      -- This is where a variable was first declared, or where a function is defined, etc.
-      -- To jump back, press <C-t>.
-      vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
-
-      -- Fuzzy find all the symbols in your current document.
-      -- Symbols are things like variables, functions, types, etc.
-      vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
-
-      -- Fuzzy find all the symbols in your current workspace.
-      -- Similar to document symbols, except searches over your entire project.
-      vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
-
-      -- Jump to the type of the word under your cursor.
-      -- Useful when you're not sure what type a variable is and you want to see
-      -- the definition of its *type*, not where it was *defined*.
-      vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
-    end,
-  })
-
-  -- Override default behavior and theme when searching
-  vim.keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-    builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-      winblend = 10,
-      previewer = false,
-    })
-  end, { desc = '[/] Fuzzily search in current buffer' })
-
-  -- It's also possible to pass additional configuration options.
-  --  See `:help telescope.builtin.live_grep()` for information about particular keys
-  vim.keymap.set(
-    'n',
-    '<leader>s/',
-    function()
-      builtin.live_grep {
-        grep_open_files = true,
-        prompt_title = 'Live Grep in Open Files',
-      }
-    end,
-    { desc = '[S]earch [/] in Open Files' }
-  )
-
-  -- Shortcut for searching your Neovim configuration files
-  vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
-end
+-- -- ============================================================
+-- -- SECTION 4: SEARCH & NAVIGATION
+-- -- Telescope setup, keymaps, LSP picker mappings
+-- -- ============================================================
+-- do
+--   -- [[ Fuzzy Finder (files, lsp, etc) ]]
+--   --
+--   -- Telescope is a fuzzy finder that comes with a lot of different things that
+--   -- it can fuzzy find! It's more than just a "file finder", it can search
+--   -- many different aspects of Neovim, your workspace, LSP, and more!
+--   --
+--   -- There are lots of other alternative pickers (like snacks.picker, or fzf-lua)
+--   -- so feel free to experiment and see what you like!
+--   --
+--   -- The easiest way to use Telescope, is to start by doing something like:
+--   --  :Telescope help_tags
+--   --
+--   -- After running this command, a window will open up and you're able to
+--   -- type in the prompt window. You'll see a list of `help_tags` options and
+--   -- a corresponding preview of the help.
+--   --
+--   -- Two important keymaps to use while in Telescope are:
+--   --  - Insert mode: <c-/>
+--   --  - Normal mode: ?
+--   --
+--   -- This opens a window that shows you all of the keymaps for the current
+--   -- Telescope picker. This is really useful to discover what Telescope can
+--   -- do as well as how to actually do it!
+--
+--   ---@type (string|vim.pack.Spec)[]
+--   local telescope_plugins = {
+--     gh 'nvim-lua/plenary.nvim',
+--     gh 'nvim-telescope/telescope.nvim',
+--     gh 'nvim-telescope/telescope-ui-select.nvim',
+--   }
+--   if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') end
+--
+--   -- NOTE: You can install multiple plugins at once
+--   vim.pack.add(telescope_plugins)
+--
+--   -- See `:help telescope` and `:help telescope.setup()`
+--   require('telescope').setup {
+--     -- You can put your default mappings / updates / etc. in here
+--     --  All the info you're looking for is in `:help telescope.setup()`
+--     --
+--     -- defaults = {
+--     --   mappings = {
+--     --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+--     --   },
+--     -- },
+--     -- pickers = {}
+--     extensions = {
+--       ['ui-select'] = { require('telescope.themes').get_dropdown() },
+--     },
+--   }
+--
+--   -- Enable Telescope extensions if they are installed
+--   pcall(require('telescope').load_extension, 'fzf')
+--   pcall(require('telescope').load_extension, 'ui-select')
+--
+--   -- See `:help telescope.builtin`
+--   local builtin = require 'telescope.builtin'
+--   vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+--   vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+--   vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+--   vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+--   vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+--   vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+--   vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+--   vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+--   vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+--   vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
+--   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+--
+--   -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
+--   -- If you later switch picker plugins, this is where to update these mappings.
+--   vim.api.nvim_create_autocmd('LspAttach', {
+--     group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
+--     callback = function(event)
+--       local buf = event.buf
+--
+--       -- Find references for the word under your cursor.
+--       vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
+--
+--       -- Jump to the implementation of the word under your cursor.
+--       -- Useful when your language has ways of declaring types without an actual implementation.
+--       vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
+--
+--       -- Jump to the definition of the word under your cursor.
+--       -- This is where a variable was first declared, or where a function is defined, etc.
+--       -- To jump back, press <C-t>.
+--       vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
+--
+--       -- Fuzzy find all the symbols in your current document.
+--       -- Symbols are things like variables, functions, types, etc.
+--       vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
+--
+--       -- Fuzzy find all the symbols in your current workspace.
+--       -- Similar to document symbols, except searches over your entire project.
+--       vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+--
+--       -- Jump to the type of the word under your cursor.
+--       -- Useful when you're not sure what type a variable is and you want to see
+--       -- the definition of its *type*, not where it was *defined*.
+--       vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
+--     end,
+--   })
+--
+--   -- Override default behavior and theme when searching
+--   vim.keymap.set('n', '<leader>/', function()
+--     -- You can pass additional configuration to Telescope to change the theme, layout, etc.
+--     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+--       winblend = 10,
+--       previewer = false,
+--     })
+--   end, { desc = '[/] Fuzzily search in current buffer' })
+--
+--   -- It's also possible to pass additional configuration options.
+--   --  See `:help telescope.builtin.live_grep()` for information about particular keys
+--   vim.keymap.set(
+--     'n',
+--     '<leader>s/',
+--     function()
+--       builtin.live_grep {
+--         grep_open_files = true,
+--         prompt_title = 'Live Grep in Open Files',
+--       }
+--     end,
+--     { desc = '[S]earch [/] in Open Files' }
+--   )
+--
+--   -- Shortcut for searching your Neovim configuration files
+--   vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
+-- end
 
 -- ============================================================
 -- SECTION 5: LSP
@@ -971,6 +874,212 @@ do
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   -- require 'custom.plugins'
+  vim.pack.add({ gh 'stevearc/oil.nvim' })
+  require("oil").setup({
+    -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
+    -- Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.
+    default_file_explorer = true,
+    -- Id is automatically added at the beginning, and name at the end
+    -- See :help oil-columns
+    columns = {
+      "icon",
+      -- "permissions",
+      -- "size",
+      -- "mtime",
+    },
+    -- Buffer-local options to use for oil buffers
+    buf_options = {
+      buflisted = false,
+      bufhidden = "hide",
+    },
+    -- Window-local options to use for oil buffers
+    win_options = {
+      wrap = false,
+      signcolumn = "no",
+      cursorcolumn = false,
+      foldcolumn = "0",
+      spell = false,
+      list = false,
+      conceallevel = 3,
+      concealcursor = "nvic",
+    },
+    -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
+    delete_to_trash = false,
+    -- Skip the confirmation popup for simple operations (:help oil.skip_confirm_for_simple_edits)
+    skip_confirm_for_simple_edits = false,
+    -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
+    -- (:help prompt_save_on_select_new_entry)
+    prompt_save_on_select_new_entry = true,
+    -- Oil will automatically delete hidden buffers after this delay
+    -- You can set the delay to false to disable cleanup entirely
+    -- Note that the cleanup process only starts when none of the oil buffers are currently displayed
+    cleanup_delay_ms = 2000,
+    lsp_file_methods = {
+      -- Enable or disable LSP file operations
+      enabled = true,
+      -- Time to wait for LSP file operations to complete before skipping
+      timeout_ms = 1000,
+      -- Set to true to autosave buffers that are updated with LSP willRenameFiles
+      -- Set to "unmodified" to only save unmodified buffers
+      autosave_changes = false,
+    },
+    -- Constrain the cursor to the editable parts of the oil buffer
+    -- Set to `false` to disable, or "name" to keep it on the file names
+    constrain_cursor = "editable",
+    -- Set to true to watch the filesystem for changes and reload oil
+    watch_for_changes = false,
+    -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
+    -- options with a `callback` (e.g. { callback = function() ... end, desc = "", mode = "n" })
+    -- Additionally, if it is a string that matches "actions.<name>",
+    -- it will use the mapping at require("oil.actions").<name>
+    -- Set to `false` to remove a keymap
+    -- See :help oil-actions for a list of all available actions
+    keymaps = {
+      ["g?"] = { "actions.show_help", mode = "n" },
+      ["<CR>"] = "actions.select",
+      ["<C-s>"] = { "actions.select", opts = { vertical = true } },
+      ["<C-h>"] = { "actions.select", opts = { horizontal = true } },
+      ["<C-t>"] = { "actions.select", opts = { tab = true } },
+      ["<C-p>"] = "actions.preview",
+      ["<C-c>"] = { "actions.close", mode = "n" },
+      ["<C-l>"] = "actions.refresh",
+      ["-"] = { "actions.parent", mode = "n" },
+      ["_"] = { "actions.open_cwd", mode = "n" },
+      ["`"] = { "actions.cd", mode = "n" },
+      ["g~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
+      ["gs"] = { "actions.change_sort", mode = "n" },
+      ["gx"] = "actions.open_external",
+      ["g."] = { "actions.toggle_hidden", mode = "n" },
+      ["g\\"] = { "actions.toggle_trash", mode = "n" },
+    },
+    -- Set to false to disable all of the above keymaps
+    use_default_keymaps = true,
+    view_options = {
+      -- Show files and directories that start with "."
+      show_hidden = false,
+      -- This function defines what is considered a "hidden" file
+      is_hidden_file = function(name, bufnr)
+        local m = name:match("^%.")
+        return m ~= nil
+      end,
+      -- This function defines what will never be shown, even when `show_hidden` is set
+      is_always_hidden = function(name, bufnr)
+        return false
+      end,
+      -- Sort file names with numbers in a more intuitive order for humans.
+      -- Can be "fast", true, or false. "fast" will turn it off for large directories.
+      natural_order = "fast",
+      -- Sort file and directory names case insensitive
+      case_insensitive = false,
+      sort = {
+        -- sort order can be "asc" or "desc"
+        -- see :help oil-columns to see which columns are sortable
+        { "type", "asc" },
+        { "name", "asc" },
+      },
+      -- Customize the highlight group for the file name
+      highlight_filename = function(entry, is_hidden, is_link_target, is_link_orphan)
+        return nil
+      end,
+    },
+    -- Extra arguments to pass to SCP when moving/copying files over SSH
+    extra_scp_args = {},
+    -- Extra arguments to pass to aws s3 when creating/deleting/moving/copying files using aws s3
+    extra_s3_args = {},
+    -- EXPERIMENTAL support for performing file operations with git
+    git = {
+      -- Return true to automatically git add/mv/rm files
+      add = function(path)
+        return false
+      end,
+      mv = function(src_path, dest_path)
+        return false
+      end,
+      rm = function(path)
+        return false
+      end,
+    },
+    -- Configuration for the floating window in oil.open_float
+    float = {
+      -- Padding around the floating window
+      padding = 2,
+      -- max_width and max_height can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+      max_width = 0,
+      max_height = 0,
+      border = nil,
+      win_options = {
+        winblend = 0,
+      },
+      -- optionally override the oil buffers window title with custom function: fun(winid: integer): string
+      get_win_title = nil,
+      -- preview_split: Split direction: "auto", "left", "right", "above", "below".
+      preview_split = "auto",
+      -- This is the config that will be passed to nvim_open_win.
+      -- Change values here to customize the layout
+      override = function(conf)
+        return conf
+      end,
+    },
+    -- Configuration for the file preview window
+    preview_win = {
+      -- Whether the preview window is automatically updated when the cursor is moved
+      update_on_cursor_moved = true,
+      -- How to open the preview window "load"|"scratch"|"fast_scratch"
+      preview_method = "fast_scratch",
+      -- A function that returns true to disable preview on a file e.g. to avoid lag
+      disable_preview = function(filename)
+        return false
+      end,
+      -- Window-local options to use for preview window buffers
+      win_options = {},
+    },
+    -- Configuration for the floating action confirmation window
+    confirmation = {
+      -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+      -- min_width and max_width can be a single value or a list of mixed integer/float types.
+      -- max_width = {100, 0.8} means "the lesser of 100 columns or 80% of total"
+      max_width = 0.9,
+      -- min_width = {40, 0.4} means "the greater of 40 columns or 40% of total"
+      min_width = { 40, 0.4 },
+      -- optionally define an integer/float for the exact width of the preview window
+      width = nil,
+      -- Height dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+      -- min_height and max_height can be a single value or a list of mixed integer/float types.
+      -- max_height = {80, 0.9} means "the lesser of 80 columns or 90% of total"
+      max_height = 0.9,
+      -- min_height = {5, 0.1} means "the greater of 5 columns or 10% of total"
+      min_height = { 5, 0.1 },
+      -- optionally define an integer/float for the exact height of the preview window
+      height = nil,
+      border = nil,
+      win_options = {
+        winblend = 0,
+      },
+    },
+    -- Configuration for the floating progress window
+    progress = {
+      max_width = 0.9,
+      min_width = { 40, 0.4 },
+      width = nil,
+      max_height = { 10, 0.9 },
+      min_height = { 5, 0.1 },
+      height = nil,
+      border = nil,
+      minimized_border = "none",
+      win_options = {
+        winblend = 0,
+      },
+    },
+    -- Configuration for the floating SSH window
+    ssh = {
+      border = nil,
+    },
+    -- Configuration for the floating keymaps help window
+    keymaps_help = {
+      border = nil,
+    },
+  })
+  vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
